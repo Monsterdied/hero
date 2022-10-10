@@ -1,11 +1,10 @@
-import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.*;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
 
 import java.io.IOException;
 
-public class Hero {
-    private Position position;
+public class Hero extends Element{
 public Hero(int i,int i2){
     position = new Position(i,i2);
 }
@@ -15,7 +14,9 @@ public int getX(){
 public int getY(){
     return position.getY();
 }
-    public Position moveUp() {
+public Position getPosition(){
+        return position;
+    }public Position moveUp() {
         return new Position(position.getX(), position.getY() - 1);
     }
     public Position moveDown() {
@@ -31,7 +32,10 @@ public int getY(){
     this.position.setY(position.getY());
     this.position.setX(position.getX());
     }
-    public void draw(TextGraphics graphics)throws IOException {
-        graphics.setCharacter(position.getX(), position.getY(), TextCharacter.fromCharacter('X')[0]);
+    public void draw(TextGraphics graphics) {
+        graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
+        graphics.enableModifiers(SGR.BOLD);
+
+        graphics.putString(new TerminalPosition(position.getX(),position.getY()), "X");
     }
 }

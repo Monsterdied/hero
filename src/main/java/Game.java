@@ -15,7 +15,6 @@ import java.io.IOException;
 public class Game {
 
     private Screen screen;
-    TextGraphics graphics = screen.newTextGraphics();
     private Arena arena = new Arena(40,20);
     public Game() {
 
@@ -27,9 +26,6 @@ public class Game {
             this.screen.setCursorPosition(null); // we don't need a cursor
             this.screen.startScreen(); // screens must be started
             this.screen.doResizeIfNecessary(); // resize screen if necessary
-            graphics.setBackgroundColor(TextColor.Factory.fromString("#3366 99"));
-                    graphics.fillRectangle(new TerminalPosition(0, 0), new
-                            TerminalSize(40, 20), ' ');
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,12 +36,13 @@ public class Game {
 
 
     private void draw() throws IOException {
-        this.screen.clear();
+        screen.clear();
         arena.draw(screen.newTextGraphics());
-        this.screen.refresh();
+        screen.refresh();
     }
     public void run() throws IOException {
         while(true) {
+
             draw();
             KeyStroke key = screen.readInput();
             if(key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') screen.close();
